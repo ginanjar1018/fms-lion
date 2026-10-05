@@ -31,70 +31,112 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Log in" />
+        <Head title="Login - File Management System" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-slate-800">
+                Welcome Back
+            </h2>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Sign in to access your documents and files.
+            </p>
+        </div>
+
+        <div
+            v-if="status"
+            class="mb-5 rounded-lg bg-green-50 px-4 py-3 text-sm font-medium text-green-700"
+        >
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
+            <!-- Email -->
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel
+                    for="email"
+                    value="Email Address"
+                    class="font-medium text-slate-700"
+                />
 
                 <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-2 block w-full rounded-lg border-slate-300 px-4 py-3 shadow-sm transition focus:border-slate-500 focus:ring-slate-500"
                     v-model="form.email"
                     required
                     autofocus
                     autocomplete="username"
+                    placeholder="Enter your email"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.email"
+                />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+            <!-- Password -->
+            <div class="mt-5">
+                <InputLabel
+                    for="password"
+                    value="Password"
+                    class="font-medium text-slate-700"
+                />
 
                 <TextInput
                     id="password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-2 block w-full rounded-lg border-slate-300 px-4 py-3 shadow-sm transition focus:border-slate-500 focus:ring-slate-500"
                     v-model="form.password"
                     required
                     autocomplete="current-password"
+                    placeholder="Enter your password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.password"
+                />
             </div>
 
-            <div class="mt-4 block">
+            <!-- Remember & Forgot -->
+            <div class="mt-5">
                 <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
+                    <Checkbox
+                        name="remember"
+                        v-model:checked="form.remember"
+                        class="rounded border-slate-300 text-slate-800 focus:ring-slate-500"
+                    />
+
+                    <span class="ms-2 text-sm text-slate-600">
+                        Remember me
+                    </span>
                 </label>
+
+                
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Forgot your password?
-                </Link>
-
+            <!-- Login Button -->
+            <div class="mt-6">
                 <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
+                    class="flex w-full justify-center rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-md transition hover:bg-slate-800 hover:shadow-lg focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 active:bg-slate-950"
+                    :class="{ 'opacity-50': form.processing }"
                     :disabled="form.processing"
                 >
-                    Log in
+                    {{ form.processing ? 'Signing in...' : 'Sign In' }}
                 </PrimaryButton>
             </div>
         </form>
+
+        <!-- Login Information -->
+        <div
+            class="mt-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3"
+        >
+            <p class="text-center text-xs leading-relaxed text-slate-500">
+                Authorized users only. Please use your registered account
+                credentials to access the system.
+            </p>
+        </div>
     </GuestLayout>
 </template>
